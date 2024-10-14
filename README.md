@@ -40,4 +40,6 @@ npm run serve
 http://localhost:8080
 ````
 
+### Back-End integrado a este projeto
 
+https://github.com/FredericoSFerreira/spassu-bookstore-api
