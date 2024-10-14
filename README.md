@@ -1,5 +1,5 @@
 ![alt text](https://res.cloudinary.com/dcwdff5pu/image/upload/v1728849906/Screenshot_46_hdpaew.png)
-# SPASSU BOOKSTORE FRONT-END - VUE JS 3 + BOOTSTRAP 5
+# SPASSU BOOKSTORE FRONT-END
 
 ## Tecnologias utilizadas
 
