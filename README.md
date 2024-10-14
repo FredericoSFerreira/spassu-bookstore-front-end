@@ -5,6 +5,7 @@
 
 - Vue Js 3
 - Boostrap 5
+- Apexcharts JS
 - Hope-ui-vue-dashboard
 
 ## Telas do projeto
