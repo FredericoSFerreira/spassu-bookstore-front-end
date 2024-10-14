@@ -7,7 +7,6 @@ import axios from 'axios';
 
 // Library Components
 import VueSweetalert2 from 'vue-sweetalert2'
-import VueApexCharts from 'vue3-apexcharts'
 import BootstrapVue3 from 'bootstrap-vue-3'
 import CounterUp from 'vue3-autocounter'
 import 'aos/dist/aos.css'
@@ -16,6 +15,7 @@ import 'aos/dist/aos.css'
 import globalComponent from './plugins/global-components'
 import globalDirective from './plugins/global-directive'
 import globalMixin from './plugins/global-mixin'
+import VueApexCharts from "vue3-apexcharts";
 
 require('waypoints/lib/noframework.waypoints.min')
 

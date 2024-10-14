@@ -86,6 +86,47 @@
         <div class="overflow-hidden card aos-init aos-animate" data-aos="fade-up" data-aos-delay="600">
           <div class="flex-wrap card-header d-flex justify-content-between">
             <div class="header-title">
+              <h4 class="mb-2 card-title">Editoras</h4>
+              <p class="mb-0">
+                <svg class="me-2 text-primary" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path>
+                </svg>
+                Porcentagem de livros por editoras
+              </p>
+            </div>
+          </div>
+          <div class="card-body">
+            <apexchart type="pie" width="100%" height="300" :options="chartEditora" :series="seriesEditora"
+                       align="center"></apexchart>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-6">
+        <div class="overflow-hidden card aos-init aos-animate" data-aos="fade-up" data-aos-delay="600">
+          <div class="flex-wrap card-header d-flex justify-content-between">
+            <div class="header-title">
+              <h4 class="mb-2 card-title">Ano de publicação dos livros</h4>
+              <p class="mb-0">
+                <svg class="me-2 text-primary" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path>
+                </svg>
+                Porcentagem de livros por ano de publicação
+              </p>
+            </div>
+          </div>
+          <div class="card-body">
+            <apexchart type="pie" width="100%" height="300" :options="chartAnoPublicacao" :series="seriesAnoPublicacao"
+                       align="center"></apexchart>
+          </div>
+        </div>
+      </div>
+    </b-row>
+
+    <b-row>
+      <div class="col-md-6 col-xl-6">
+        <div class="overflow-hidden card aos-init aos-animate" data-aos="fade-up" data-aos-delay="600">
+          <div class="flex-wrap card-header d-flex justify-content-between">
+            <div class="header-title">
               <h4 class="mb-2 card-title">Autores</h4>
               <p class="mb-0">
                 <svg class="me-2 text-primary" width="24" height="24" viewBox="0 0 24 24">
@@ -134,14 +175,37 @@
         </div>
       </div>
     </b-row>
+    <b-row>
+      <div class="col-md-12 col-xl-12">
+        <div class="overflow-hidden card aos-init aos-animate" data-aos="fade-up" data-aos-delay="600">
+          <div class="flex-wrap card-header d-flex justify-content-between">
+            <div class="header-title">
+              <h4 class="mb-2 card-title">Ano de publicação</h4>
+              <p class="mb-0">
+                <svg class="me-2 text-primary" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path>
+                </svg>
+                Quantidade de livros por ano de publicação
+              </p>
+            </div>
+          </div>
+          <div class="card-body">
+            <apexchart type="bar" width="95%" height="400" :options="chartOptions" :series="series"
+                       align="center"></apexchart>
+          </div>
+        </div>
+      </div>
+    </b-row>
 
   </div>
 </template>
 <script>
 import Vue3autocounter from 'vue3-autocounter'
+import { BRow } from 'bootstrap-vue-3'
 
 export default {
   components: {
+    BRow,
     Vue3autocounter
   },
   name: 'WidgetChart',
@@ -155,6 +219,20 @@ export default {
         .then(response => {
           console.log(response.data)
           this.payloadDash = response.data
+          this.chartAnoPublicacao = { labels: response.data.ano_publicacao.map(({ ano_publicacao }) => ano_publicacao) }
+          this.seriesAnoPublicacao = response.data.ano_publicacao.map(({ qtd }) => qtd)
+
+          this.chartEditora = { labels: response.data.editoras.map(({ editora }) => editora) }
+          this.seriesEditora = response.data.editoras.map(({ qtd }) => qtd)
+
+          this.chartOptions = { xaxis: { categories: response.data.ano_publicacao.map(({ ano_publicacao }) => ano_publicacao) } }
+          this.series = [
+            {
+              name: 'qtd',
+              data: this.seriesAnoPublicacao
+            }
+          ]
+
         })
         .catch(error => {
           console.error(error)
@@ -163,6 +241,59 @@ export default {
   },
   data() {
     return {
+      chartOptions: {
+        chart: {
+          width: '100%',
+          type: 'bar'
+        },
+        xaxis: {
+          categories: []
+        }
+      },
+      series: [
+        {
+          name: 'qtd',
+          data: []
+        }
+      ],
+      seriesEditora: [],
+      seriesAnoPublicacao: [],
+      chartEditora: {
+        chart: {
+          width: 500,
+          type: 'pie'
+        },
+        labels: [],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 500
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+      },
+      chartAnoPublicacao: {
+        chart: {
+          width: 500,
+          type: 'pie'
+        },
+        labels: [],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 500
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+      },
       payloadDash: {},
       columnsLivros: [
         { key: 'titulo', label: 'Titulo', sortable: false },
